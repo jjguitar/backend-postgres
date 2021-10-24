@@ -57,6 +57,12 @@ class User extends Model {
       foreignKey: 'id_user',
       otherKey: 'id_eteam'
     });
+    this.belongsToMany(models.Process, {
+      as: 'processUser',
+      through: models.ProcessUser,
+      foreignKey: 'id_user',
+      otherKey: 'id_process'
+    });
   }
 
   static config(sequelize) {

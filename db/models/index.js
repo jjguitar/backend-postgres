@@ -22,6 +22,7 @@ function setupModels(sequelize) {
   User.associate(sequelize.models);
   ETeam.associate(sequelize.models);
   Process.associate(sequelize.models);
+  Meeting.associate(sequelize.models);
 }
 
 module.exports = setupModels;

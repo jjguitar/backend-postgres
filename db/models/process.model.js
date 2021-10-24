@@ -38,6 +38,12 @@ const ProcessSchema = {
 class Process extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: 'user' });
+    this.belongsToMany(models.User, {
+      as: 'usersProcess',
+      through: models.ProcessUser,
+      foreignKey: 'id_process',
+      otherKey: 'id_user'
+    });
   }
 
   static config(sequelize) {

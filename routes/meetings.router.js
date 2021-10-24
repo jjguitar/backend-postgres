@@ -1,29 +1,29 @@
 const express = require('express');
 
-const ProcessService = require('./../services/process.service');
+const MeetingService = require('./../services/meeting.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { createProcessSchema, updateProcessSchema, getProcessSchema } = require('./../schemas/process.schema');
-const { addProcessUser } = require('./../schemas/processUser.schema');
+const { createMeetingSchema, updateMeetingSchema, getMeetingSchema } = require('./../schemas/meeting.schema');
+const { addETeamMeeting } = require('./../schemas/meetingETeam.schema');
 
 const router = express.Router();
-const service = new ProcessService();
+const service = new MeetingService();
 
 router.get('/', async (req, res, next) => {
   try {
-    const eTeams = await service.find();
-    res.json(eTeams);
+    const meeting = await service.find();
+    res.json(meeting);
   } catch (error) {
     next(error);
   }
 });
 
 router.get('/:id',
-  validatorHandler(getProcessSchema, 'params'),
+  validatorHandler(getMeetingSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const eTeam = await service.findOne(id);
-      res.json(eTeam);
+      const meeting = await service.findOne(id);
+      res.json(meeting);
     } catch (error) {
       next(error);
     }
@@ -31,25 +31,25 @@ router.get('/:id',
 );
 
 router.post('/',
-  validatorHandler(createProcessSchema, 'body'),
+  validatorHandler(createMeetingSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
-      const process = await service.create(body);
-      res.status(201).json(process);
+      const newMeeting = await service.create(body);
+      res.status(201).json(newMeeting);
     } catch (error) {
       next(error);
     }
   }
 );
 
-router.post('/add-process',
-  validatorHandler(addProcessUser, 'body'),
+router.post('/add-eteam',
+  validatorHandler(addETeamMeeting, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
-      const newProcessUser = await service.addProcessUser(body);
-      res.status(201).json(newProcessUser);
+      const newETeamMeeting = await service.addETeamMeeting(body);
+      res.status(201).json(newETeamMeeting);
     } catch (error) {
       next(error);
     }
@@ -57,14 +57,14 @@ router.post('/add-process',
 );
 
 router.patch('/:id',
-  validatorHandler(getProcessSchema, 'params'),
-  validatorHandler(updateProcessSchema, 'body'),
+  validatorHandler(getMeetingSchema, 'params'),
+  validatorHandler(updateMeetingSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
-      const process = await service.update(id, body);
-      res.json(process);
+      const meeting = await service.update(id, body);
+      res.json(meeting);
     } catch (error) {
       next(error);
     }
@@ -72,7 +72,7 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
-  validatorHandler(getProcessSchema, 'params'),
+  validatorHandler(getMeetingSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;

@@ -25,6 +25,12 @@ class ETeam extends Model {
       foreignKey: 'id_eteam',
       otherKey: 'id_user'
     });
+    this.belongsToMany(models.Meeting, {
+      as: 'eTeamMeeting',
+      through: models.MeetingETeam,
+      foreignKey: 'id_eteam',
+      otherKey: 'id_meeting'
+    });
   }
 
   static config(sequelize) {

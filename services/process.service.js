@@ -10,8 +10,8 @@ class ProcessService {
     return newProcess;
   }
 
-  async addProcess(data) {
-    const newProcess = await models.Process.create(data);
+  async addProcessUser(data) {
+    const newProcess = await models.ProcessUser.create(data);
     return newProcess;
   }
 
@@ -27,7 +27,8 @@ class ProcessService {
   async findOne(id) {
     const user = await models.Process.findByPk(id, {
       include: [
-        'user'
+        'user',
+        'usersProcess'
       ]
     });
     if (!user) {

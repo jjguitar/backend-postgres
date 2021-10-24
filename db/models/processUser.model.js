@@ -1,5 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 
+const { USER_TABLE } = require('./user.model');
+const { PROCESS_TABLE } = require('./process.model');
 const PROCESS_USER_TABLE = 'processes_user';
 
 const ProcessUserSchema = {
@@ -9,13 +11,25 @@ const ProcessUserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  id_process: {
-    allowNull: false,
-    type: DataTypes.INTEGER
-  },
   id_user: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    references: {
+      model: USER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  id_process: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: PROCESS_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 

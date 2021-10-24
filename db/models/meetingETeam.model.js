@@ -1,4 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
+const { MEETING_TABLE } = require('./meeting.model');
+const { ETEAM_TABLE } = require('./eteam.model');
 
 const MEETING_ETEAM_TABLE = 'meetings_eteam';
 
@@ -11,11 +13,23 @@ const MeetingETeamSchema = {
   },
   id_meeting: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    references: {
+      model: MEETING_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
   id_eteam: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    references: {
+      model: ETEAM_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 

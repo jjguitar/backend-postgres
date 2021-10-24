@@ -1,33 +1,32 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
 
-class UserService {
+class MeetingService {
   constructor() {}
 
   async create(data) {
-    const newUser = await models.User.create(data);
-    return newUser;
+    const newMeeting = await models.Meeting.create(data);
+    return newMeeting;
   }
 
-  async addETeamUser(data) {
-    const newETeamUser = await models.UserETeam.create(data);
-    return newETeamUser;
+  async addETeamMeeting(data) {
+    const newETeamMeeting = await models.MeetingETeam.create(data);
+    return newETeamMeeting;
   }
 
   async find() {
-    const rta = await models.User.findAll();
+    const rta = await models.Meeting.findAll();
     return rta;
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id, {
+    const user = await models.Meeting.findByPk(id, {
       include: [
-        'eTeamUser',
-        'processUser'
+        'meetingETeam'
       ]
     });
     if (!user) {
-      throw boom.notFound('User not found')
+      throw boom.notFound('Meeting not found')
     }
     return user;
   }
@@ -45,4 +44,4 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+module.exports = MeetingService;

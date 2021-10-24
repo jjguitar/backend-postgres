@@ -29,8 +29,13 @@ const MeetingSchema = {
 }
 
 class Meeting extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsToMany(models.ETeam, {
+      as: 'meetingETeam',
+      through: models.MeetingETeam,
+      foreignKey: 'id_meeting',
+      otherKey: 'id_eteam'
+    });
   }
 
   static config(sequelize) {
