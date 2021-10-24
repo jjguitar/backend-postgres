@@ -63,6 +63,12 @@ class User extends Model {
       foreignKey: 'id_user',
       otherKey: 'id_process'
     });
+    this.belongsToMany(models.Meeting, {
+      as: 'userMeeting',
+      through: models.MeetingUser,
+      foreignKey: 'id_user',
+      otherKey: 'id_meeting'
+    });
   }
 
   static config(sequelize) {

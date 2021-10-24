@@ -36,6 +36,12 @@ class Meeting extends Model {
       foreignKey: 'id_meeting',
       otherKey: 'id_eteam'
     });
+    this.belongsToMany(models.User, {
+      as: 'meetingUser',
+      through: models.MeetingUser,
+      foreignKey: 'id_meeting',
+      otherKey: 'id_user'
+    });
   }
 
   static config(sequelize) {

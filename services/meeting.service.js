@@ -14,6 +14,11 @@ class MeetingService {
     return newETeamMeeting;
   }
 
+  async addUserMeeting(data) {
+    const newUserMeeting = await models.MeetingUser.create(data);
+    return newUserMeeting;
+  }
+
   async find() {
     const rta = await models.Meeting.findAll();
     return rta;
@@ -22,7 +27,8 @@ class MeetingService {
   async findOne(id) {
     const user = await models.Meeting.findByPk(id, {
       include: [
-        'meetingETeam'
+        'meetingETeam',
+        'meetingUser'
       ]
     });
     if (!user) {

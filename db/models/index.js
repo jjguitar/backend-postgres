@@ -1,5 +1,5 @@
 const { User, UserSchema } = require('./user.model');
-const { Assignment, AssignmentSchema } = require('./assignment.model');
+const { MeetingUser, MeetingUserSchema } = require('./meetingUser.model');
 const { AssignmentETeam, AssignmentETeamSchema } = require('./assignmentETeam.model');
 const { ETeam, EteamSchema } = require('./eteam.model');
 const { Meeting, MeetingSchema } = require('./meeting.model');
@@ -10,7 +10,7 @@ const { UserETeam, UserETeamSchema } = require('./userETeams.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
-  Assignment.init(AssignmentSchema, Assignment.config(sequelize));
+  MeetingUser.init(MeetingUserSchema, MeetingUser.config(sequelize));
   AssignmentETeam.init(AssignmentETeamSchema, AssignmentETeam.config(sequelize));
   ETeam.init(EteamSchema, ETeam.config(sequelize));
   Meeting.init(MeetingSchema, Meeting.config(sequelize));

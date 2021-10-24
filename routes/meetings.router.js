@@ -4,6 +4,7 @@ const MeetingService = require('./../services/meeting.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const { createMeetingSchema, updateMeetingSchema, getMeetingSchema } = require('./../schemas/meeting.schema');
 const { addETeamMeeting } = require('./../schemas/meetingETeam.schema');
+const { addUserMeeting } = require('./../schemas/meetingUser.schema');
 
 const router = express.Router();
 const service = new MeetingService();
@@ -50,6 +51,19 @@ router.post('/add-eteam',
       const body = req.body;
       const newETeamMeeting = await service.addETeamMeeting(body);
       res.status(201).json(newETeamMeeting);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post('/add-users',
+  validatorHandler(addUserMeeting, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newUserMeeting = await service.addUserMeeting(body);
+      res.status(201).json(newUserMeeting);
     } catch (error) {
       next(error);
     }
