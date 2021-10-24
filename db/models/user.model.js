@@ -47,6 +47,10 @@ const UserSchema = {
 class User extends Model {
 
   static associate(models) {
+    this.hasMany(models.Process, {
+      as: 'process',
+      foreignKey: 'userId'
+    });
     this.belongsToMany(models.ETeam, {
       as: 'eTeamUser',
       through: models.UserETeam,

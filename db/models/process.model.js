@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
+const { USER_TABLE } = require('./user.model');
 
 const PROCESS_TABLE = 'processes';
 
@@ -21,15 +22,22 @@ const ProcessSchema = {
     allowNull: false,
     type: DataTypes.STRING
   },
-  id_user_leader: {
+  userId: {
+    field: 'id_user_leader',
     allowNull: false,
-    type: DataTypes.INTEGER
-  },
+    type: DataTypes.INTEGER,
+    references: {
+      model: USER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  }
 }
 
 class Process extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsTo(models.User, { as: 'user' });
   }
 
   static config(sequelize) {
