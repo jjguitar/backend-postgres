@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const { USER_TABLE } = require('./user.model');
+const { ETEAM_TABLE } = require('./eteam.model');
 
 const USER_ETEAM_TABLE = 'users_eteam';
 
@@ -22,13 +23,18 @@ const UserETeamSchema = {
   },
   id_eteam: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    references: {
+      model: ETEAM_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 
 class UserETeam extends Model {
-  static associate(models) {
-    this.belongsTo(models.User, {as: 'user' })
+  static associate() {
   }
 
   static config(sequelize) {

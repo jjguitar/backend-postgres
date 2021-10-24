@@ -9,13 +9,22 @@ class UserService {
     return newUser;
   }
 
+  async addETeamUser(data) {
+    const newETeamUser = await models.UserETeam.create(data);
+    return newETeamUser;
+  }
+
   async find() {
     const rta = await models.User.findAll();
     return rta;
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id, {
+      include: [
+        'eTeamUser'
+      ]
+    });
     if (!user) {
       throw boom.notFound('User not found')
     }

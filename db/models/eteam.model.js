@@ -17,8 +17,14 @@ const EteamSchema = {
 }
 
 class ETeam extends Model {
-  static associate() {
-    // associate
+
+  static associate(models) {
+    this.belongsToMany(models.User, {
+      as: 'usersETeam',
+      through: models.UserETeam,
+      foreignKey: 'id_eteam',
+      otherKey: 'id_user'
+    });
   }
 
   static config(sequelize) {

@@ -20,7 +20,7 @@ function setupModels(sequelize) {
   UserETeam.init(UserETeamSchema, UserETeam.config(sequelize));
 
   User.associate(sequelize.models);
-  UserETeam.associate(sequelize.models);
+  ETeam.associate(sequelize.models);
 }
 
 module.exports = setupModels;

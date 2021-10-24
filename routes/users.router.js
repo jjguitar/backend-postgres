@@ -3,6 +3,7 @@ const express = require('express');
 const UserService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const { updateUserSchema, createUserSchema, getUserSchema } = require('./../schemas/user.schema');
+const { addUserETeamSchema } = require('./../schemas/userETeam.schema');
 
 const router = express.Router();
 const service = new UserService();
@@ -36,6 +37,19 @@ router.post('/',
       const body = req.body;
       const newCategory = await service.create(body);
       res.status(201).json(newCategory);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post('/add-eteam',
+  validatorHandler(addUserETeamSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newETeam = await service.addETeamUser(body);
+      res.status(201).json(newETeam);
     } catch (error) {
       next(error);
     }

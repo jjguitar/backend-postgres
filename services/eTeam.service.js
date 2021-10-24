@@ -9,13 +9,22 @@ class ETeamService {
     return newETeam;
   }
 
+  async addUserETeam(data) {
+    const newUserETeam = await models.UserETeam.create(data);
+    return newUserETeam;
+  }
+
   async find() {
     const rta = await models.ETeam.findAll();
     return rta;
   }
 
   async findOne(id) {
-    const user = await models.ETeam.findByPk(id);
+    const user = await models.ETeam.findByPk(id, {
+      include: [
+        'usersETeam'
+      ]
+    });
     if (!user) {
       throw boom.notFound('ETeam not found')
     }
