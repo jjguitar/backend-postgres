@@ -4,7 +4,10 @@ const id = Joi.number().integer();
 const name = Joi.string().min(1);
 const description = Joi.string().min(1);
 const date = Joi.date();
-const reqVolunteer = Joi.boolean()
+const reqVolunteer = Joi.boolean();
+
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
 
 const createMeetingSchema = Joi.object({
   name: name.required(),
@@ -24,4 +27,9 @@ const getMeetingSchema = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createMeetingSchema, updateMeetingSchema, getMeetingSchema }
+const queryProductSchema = Joi.object({
+  limit,
+  offset,
+});
+
+module.exports = { createMeetingSchema, updateMeetingSchema, getMeetingSchema, queryProductSchema }

@@ -2,7 +2,7 @@ const express = require('express');
 
 const MeetingService = require('./../services/meeting.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { createMeetingSchema, updateMeetingSchema, getMeetingSchema } = require('./../schemas/meeting.schema');
+const { createMeetingSchema, updateMeetingSchema, getMeetingSchema, queryProductSchema } = require('./../schemas/meeting.schema');
 const { addETeamMeeting } = require('./../schemas/meetingETeam.schema');
 const { addUserMeeting } = require('./../schemas/meetingUser.schema');
 
@@ -10,8 +10,9 @@ const router = express.Router();
 const service = new MeetingService();
 
 router.get('/', async (req, res, next) => {
+  validatorHandler(queryProductSchema, 'query')
   try {
-    const meeting = await service.find();
+    const meeting = await service.find(req.query);
     res.json(meeting);
   } catch (error) {
     next(error);

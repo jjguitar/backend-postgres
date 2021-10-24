@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
+const { Op } = require('sequelize');
 
 class MeetingService {
   constructor() {}
@@ -19,8 +20,24 @@ class MeetingService {
     return newUserMeeting;
   }
 
-  async find() {
-    const rta = await models.Meeting.findAll();
+  async find(query) {
+    const options = {
+      include: [
+        'meetingUser',
+        'meetingETeam',
+      ],
+      where: {},
+      order: ['date']
+    }
+    const { limit, offset } = query;
+    if (limit && offset) {
+      options.limit =  limit;
+      options.offset =  offset;
+      options.where.date = {
+        [Op.gte]: Date.now()
+      }
+    }
+    const rta = await models.Meeting.findAll(options);
     return rta;
   }
 
